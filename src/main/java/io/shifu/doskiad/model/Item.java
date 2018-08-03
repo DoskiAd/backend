@@ -1,19 +1,11 @@
 package io.shifu.doskiad.model;
 
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "items")
@@ -21,7 +13,10 @@ public class Item {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;	
+	private Long id;
+
+	@Column(name = "category_id")
+	private Long category;
 
 	@Column(name = "date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -38,20 +33,12 @@ public class Item {
 	
 	@Column(name = "location")
 	private String location;
-	
-	@JsonIgnore
-	@ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id", nullable=false)
-	private Category category;
-		
-	
-	public Category getCategory() {
-		return category;
-	}
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
+	@Column(name = "photo")
+	private Integer photo;
+
+	@OneToMany(mappedBy="item", fetch = FetchType.EAGER)
+	private Set<Contact> contacts;
 
 	public Long getId() {
 		return id;
@@ -59,7 +46,15 @@ public class Item {
 
 	public void setId(Long id) {
 		this.id = id;
-	}	
+	}
+
+	public Long getCategory() {
+		return category;
+	}
+
+	public void setCategory(Long category) {
+		this.category = category;
+	}
 
 	public Date getDate() {
 		return date;
@@ -93,12 +88,27 @@ public class Item {
 		this.description = description;
 	}
 
+	public Integer getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Integer photo) {
+		this.photo = photo;
+	}
+
 	public String getLocation() {
 		return location;
 	}
 
 	public void setLocation(String location) {
 		this.location = location;
-	}	
+	}
 
+	public Set<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
+	}
 }

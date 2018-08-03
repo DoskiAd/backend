@@ -26,12 +26,12 @@ public class AdController {
 		this.itemService = itemService;
 	}
 	
-	@RequestMapping(value = "/api/v1/categories", method = RequestMethod.GET)
+	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	ResponseEntity<List<Category>> getAllCategories() {
 		return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/v1/items", method = RequestMethod.GET)
+	@RequestMapping(value = "/items", method = RequestMethod.GET)
 	ResponseEntity<List<Item>> getAllItems() {
 		return new ResponseEntity<>(itemService.findAll(), HttpStatus.OK);
 	}
