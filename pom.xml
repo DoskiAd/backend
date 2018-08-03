@@ -53,12 +53,6 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${springsecurity.version}</version>
 		</dependency>
-		<!-- Spring Security OAuth2-->
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>${springsecurityoauth2.version}</version>
-		</dependency>
 		<!--database-->
 		<dependency>
 			<groupId>mysql</groupId>

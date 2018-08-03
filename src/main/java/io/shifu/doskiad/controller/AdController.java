@@ -35,5 +35,4 @@ public class AdController {
 	ResponseEntity<List<Item>> getAllItems() {
 		return new ResponseEntity<>(itemService.findAll(), HttpStatus.OK);
 	}
-
 }
