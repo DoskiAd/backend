@@ -37,6 +37,9 @@ public class Item {
 	@Column(name = "photo")
 	private Integer photo;
 
+	@Column(name = "name")
+	private String name;
+
 	@OneToMany(mappedBy="item", fetch = FetchType.EAGER)
 	private Set<Contact> contacts;
 
@@ -102,6 +105,14 @@ public class Item {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<Contact> getContacts() {
