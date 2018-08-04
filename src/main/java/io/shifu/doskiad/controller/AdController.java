@@ -21,52 +21,57 @@ import io.shifu.doskiad.services.ItemService;
 @RestController
 @RequestMapping("/doskiad")
 public class AdController {
-	
-	private final CategoryService categoryService;
-	private final ItemService itemService;
-	
-	@Autowired
-	public AdController(CategoryService categoryService, ItemService itemService) {
-		this.categoryService = categoryService;
-		this.itemService = itemService;
-	}
-	
-	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	ResponseEntity<List<Category>> getAllCategories() {
-		return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
-	ResponseEntity<List<Item>> getItemsByCategoryId(@PathVariable("id") Long id,
-			@RequestParam(value="page", required=false) Integer page,
-			@RequestParam(value="size", required=false) Integer size,
-			@RequestParam(value="d", required=false) String direction,
-			@RequestParam(value="p", required=false) String param){
-		Page<Item> result = itemService.findByCategoryId(id,
-					        	page == null ? 1 : page,
-					        	size == null ? 12 : size,
-							    direction == null ? "desc" : direction,
-							    param == null ? "date" : param);
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("x-total-found", Long.toString(result.getTotalElements()));
-		responseHeaders.set("x-total-pages", Integer.toString(result.getTotalPages()));        
-		return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);		
-	}
-	
-	@RequestMapping(value = "/items", method = RequestMethod.GET)
-	ResponseEntity<List<Item>> getAllItems(
-			@RequestParam(value="page", required=false) Integer page,
-			@RequestParam(value="size", required=false) Integer size,
-			@RequestParam(value="d", required=false) String direction,
-			@RequestParam(value="p", required=false) String param) {
-		Page<Item> result = itemService.findAll(
-				        	page == null ? 1 : page,
-				        	size == null ? 12 : size,
-						    direction == null ? "desc" : direction,
-						    param == null ? "date" : param);
-		HttpHeaders responseHeaders = new HttpHeaders();
+
+    private final CategoryService categoryService;
+    private final ItemService itemService;
+
+    @Autowired
+    public AdController(CategoryService categoryService, ItemService itemService) {
+        this.categoryService = categoryService;
+        this.itemService = itemService;
+    }
+
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    ResponseEntity<List<Category>> getAllCategories() {
+        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
+    ResponseEntity<List<Item>> getItemsByCategoryId(
+            @PathVariable("id") Long id,
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "12") Integer size,
+            @RequestParam(value = "d", required = false, defaultValue = "desc") String direction,
+            @RequestParam(value = "p", required = false, defaultValue = "date") String param,
+            @RequestParam(value = "title", required = false) String title) {
+        Page<Item> result;
+        if (title != null) {
+            result = itemService.findByCategoryAndTitle(id, title, page, size, direction, param);
+        } else {
+            result = itemService.findByCategory(id, page, size, direction, param);
+        }
+        HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-total-found", Long.toString(result.getTotalElements()));
-        responseHeaders.set("x-total-pages", Integer.toString(result.getTotalPages()));        
-        return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);		
-	}
+        responseHeaders.set("x-total-pages", Integer.toString(result.getTotalPages()));
+        return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/items", method = RequestMethod.GET)
+    ResponseEntity<List<Item>> getAllItems(
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "12") Integer size,
+            @RequestParam(value = "d", required = false, defaultValue = "desc") String direction,
+            @RequestParam(value = "p", required = false, defaultValue = "date") String param,
+            @RequestParam(value = "title", required = false) String title) {
+        Page<Item> result;
+        if (title != null) {
+            result = itemService.findByTitle(title, page, size, direction, param);
+        } else {
+            result = itemService.find(page, size, direction, param);
+        }
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("x-total-found", Long.toString(result.getTotalElements()));
+        responseHeaders.set("x-total-pages", Integer.toString(result.getTotalPages()));
+        return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);
+    }
 }

@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import io.shifu.doskiad.model.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-	
-	Page<Item> findByCategory(Long id, Pageable p);
 
+    Page<Item> findAllByTitleContaining(String title, Pageable pageable);
+
+    Page<Item> findAllByCategory(Long id, Pageable pageable);
+
+    Page<Item> findAllByCategoryAndTitleContaining(Long id, String title, Pageable pageable);
 }
