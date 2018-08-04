@@ -69,5 +69,4 @@ public class AdController {
         responseHeaders.set("x-total-pages", Integer.toString(result.getTotalPages()));        
         return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);		
 	}
-
 }
