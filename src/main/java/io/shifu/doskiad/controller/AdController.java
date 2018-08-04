@@ -19,7 +19,6 @@ import io.shifu.doskiad.services.CategoryService;
 import io.shifu.doskiad.services.ItemService;
 
 @RestController
-@RequestMapping("/doskiad")
 public class AdController {
 
     private final CategoryService categoryService;
