@@ -50,8 +50,8 @@ public class AdController {
             result = itemService.findByCategory(id, page, size, direction, param);
         }
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("x-total-found", Long.toString(result.getTotalElements()));
-        responseHeaders.set("x-total-pages", Integer.toString(result.getTotalPages()));
+        responseHeaders.set("totalFound", Long.toString(result.getTotalElements()));
+        responseHeaders.set("totalPage", Integer.toString(result.getTotalPages()));
         return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);
     }
 
@@ -69,8 +69,8 @@ public class AdController {
             result = itemService.find(page, size, direction, param);
         }
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("x-total-found", Long.toString(result.getTotalElements()));
-        responseHeaders.set("x-total-pages", Integer.toString(result.getTotalPages()));
+        responseHeaders.set("totalFound", Long.toString(result.getTotalElements()));
+        responseHeaders.set("totalPage", Integer.toString(result.getTotalPages()));
         return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);
     }
 }
