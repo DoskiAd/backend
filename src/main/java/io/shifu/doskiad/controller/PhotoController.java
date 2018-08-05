@@ -4,7 +4,6 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +18,14 @@ public class PhotoController {
 	@Autowired
 	private ServletContext servletContext;
 
-	@RequestMapping(value = "/photo/{file:.+}", method = RequestMethod.GET)
-	public ResponseEntity<Resource> getImageAsResource(@PathVariable("file") String file) {
-	    HttpHeaders headers = new HttpHeaders();
+	@RequestMapping(value = "items/{id}/photo/{file:.+}", method = RequestMethod.GET)
+	public ResponseEntity<Resource> getImageAsResource(
+			@PathVariable("id") Long id,
+			@PathVariable("file") String file) {	    
 	    Resource resource = 
-	        new ServletContextResource(servletContext, "/WEB-INF/photos/" + file);
-	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	        new ServletContextResource(servletContext, 
+	        		String.format("/WEB-INF/photos/%s/%s", id, file));
+	    return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 
 }

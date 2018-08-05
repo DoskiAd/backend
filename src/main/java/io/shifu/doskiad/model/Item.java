@@ -34,8 +34,8 @@ public class Item {
 	@Column(name = "location")
 	private String location;
 
-	@OneToMany(mappedBy="item", fetch = FetchType.EAGER)
-	private Set<Photo> photos;
+	@Column(name = "photos")
+	private Integer photos;
 
 	@Column(name = "name")
 	private String name;
@@ -91,11 +91,11 @@ public class Item {
 		this.description = description;
 	}
 
-	public Set<Photo> getPhotos() {
+	public Integer getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(Set<Photo> photos) {
+	public void setPhotos(Integer photos) {
 		this.photos = photos;
 	}
 
