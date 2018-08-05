@@ -23,6 +23,8 @@ INSERT INTO items (category_id, date, title, price, description, location, photo
 INSERT INTO items (category_id, date, title, price, description, location, photo) VALUES('2', '2018-07-11', 'Мощный игровой ноутбук Acer', '21000', 'Мощный игровой ноутбук Acer...', 'Москва', '0');
 
 
+INSERT INTO photos (file_name, item_id) VALUES ('1111.jpeg', '1');
+INSERT INTO photos (file_name, item_id) VALUES ('2222.jpeg', '1');
 
 
 

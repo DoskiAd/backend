@@ -1,6 +1,8 @@
 package io.shifu.doskiad.services;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,11 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     public ItemServiceImpl(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
+    }
+    
+    @Override
+    public Optional<Item> findById(Long id) {
+    	return itemRepository.findById(id);
     }
 
     @Override
