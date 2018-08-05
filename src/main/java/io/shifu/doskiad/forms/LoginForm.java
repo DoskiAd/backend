@@ -3,23 +3,23 @@ package io.shifu.doskiad.forms;
 import java.util.Objects;
 
 public class LoginForm {
-    private String login;
+    private String email;
     private String password;
 
     public LoginForm() {
     }
 
-    public LoginForm(String login, String password) {
-        this.login = login;
+    public LoginForm(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -35,13 +35,12 @@ public class LoginForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LoginForm loginForm = (LoginForm) o;
-        return Objects.equals(login, loginForm.login) &&
+        return Objects.equals(email, loginForm.email) &&
                 Objects.equals(password, loginForm.password);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(login, password);
+        return Objects.hash(email, password);
     }
 }

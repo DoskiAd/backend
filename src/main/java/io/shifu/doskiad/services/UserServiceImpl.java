@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,6 +25,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return usersRepository.findByEmail(email);
+    }
+
+    @Override
     public void signUp(UserForm userForm) {
         String hashPassword = passwordEncoder.encode(userForm.getPassword());
 
@@ -30,7 +37,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userForm.getFirstName());
         user.setLastName(userForm.getLastName());
         user.setHashPassword(hashPassword);
-        user.setLogin(userForm.getLogin());
+        user.setEmail(userForm.getEmail());
         user.setRole(Role.USER);
         user.setState(State.ACTIVE);
 

@@ -1,7 +1,13 @@
 package io.shifu.doskiad.services;
 
 import io.shifu.doskiad.forms.UserForm;
+import io.shifu.doskiad.model.User;
+
+import java.util.Optional;
 
 public interface UserService {
+
+    Optional<User> findByEmail(String email);
+
     void signUp(UserForm userForm);
 }

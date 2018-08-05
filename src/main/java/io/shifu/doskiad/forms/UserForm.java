@@ -5,17 +5,19 @@ import java.util.Objects;
 public class UserForm {
     private String firstName;
     private String lastName;
-    private String login;
+    private String email;
     private String password;
+    private String confirmPassword;
 
     public UserForm() {
     }
 
-    public UserForm(String firstName, String lastName, String login, String password) {
+    public UserForm(String firstName, String lastName, String email, String password, String confirmPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.login = login;
+        this.email = email;
         this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
     public String getFirstName() {
@@ -34,12 +36,12 @@ public class UserForm {
         this.lastName = lastName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -50,6 +52,14 @@ public class UserForm {
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,13 +67,14 @@ public class UserForm {
         UserForm userForm = (UserForm) o;
         return Objects.equals(firstName, userForm.firstName) &&
                 Objects.equals(lastName, userForm.lastName) &&
-                Objects.equals(login, userForm.login) &&
-                Objects.equals(password, userForm.password);
+                Objects.equals(email, userForm.email) &&
+                Objects.equals(password, userForm.password) &&
+                Objects.equals(confirmPassword, userForm.confirmPassword);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(firstName, lastName, login, password);
+        return Objects.hash(firstName, lastName, email, password, confirmPassword);
     }
 }
