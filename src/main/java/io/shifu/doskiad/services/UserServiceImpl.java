@@ -47,4 +47,17 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    @Override
+    public Optional<User> findByConfirmationToken(String token) {
+        return usersRepository.findByConfirmationToken(token);
+    }
+
+    @Override
+    public void activateUser(User user) {
+        user.setConfirmationToken(null);
+        user.setState(State.ACTIVE);
+
+        usersRepository.save(user);
+    }
 }

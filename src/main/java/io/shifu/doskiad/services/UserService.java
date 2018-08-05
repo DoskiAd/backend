@@ -10,4 +10,8 @@ public interface UserService {
     Optional<User> findByEmail(String email);
 
     User signUp(UserForm userForm);
+
+    Optional<User> findByConfirmationToken(String token);
+
+    void activateUser(User user);
 }

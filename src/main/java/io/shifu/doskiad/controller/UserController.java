@@ -2,6 +2,7 @@ package io.shifu.doskiad.controller;
 
 import io.shifu.doskiad.forms.LoginForm;
 import io.shifu.doskiad.forms.UserForm;
+import io.shifu.doskiad.model.User;
 import io.shifu.doskiad.services.EmailService;
 import io.shifu.doskiad.services.LoginService;
 import io.shifu.doskiad.services.UserService;
@@ -10,9 +11,10 @@ import io.shifu.doskiad.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -44,6 +46,20 @@ public class UserController {
         } else {
             emailService.sendRegistrationEmail(userService.signUp(userForm));
             return ResponseEntity.ok("A confirmation e-mail has been sent to " + userForm.getEmail());
+        }
+    }
+
+    @GetMapping("/confirm")
+    public ResponseEntity<String> confirm(Model model, @RequestParam("token") String token) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>("Bad token.", HttpStatus.BAD_REQUEST);
+        }
+        Optional<User> optionalUser = userService.findByConfirmationToken(token);
+        if (optionalUser.isPresent()) {
+            userService.activateUser(optionalUser.get());
+            return ResponseEntity.ok(optionalUser.get().getEmail() + " activated.");
+        } else {
+            return new ResponseEntity<>("Bad token.", HttpStatus.BAD_REQUEST);
         }
     }
 }
