@@ -2,6 +2,7 @@ package io.shifu.doskiad.controller;
 
 import io.shifu.doskiad.forms.LoginForm;
 import io.shifu.doskiad.forms.UserForm;
+import io.shifu.doskiad.services.EmailService;
 import io.shifu.doskiad.services.LoginService;
 import io.shifu.doskiad.services.UserService;
 import io.shifu.doskiad.transfer.TokenDto;
@@ -19,12 +20,14 @@ public class UserController {
     private final LoginService loginService;
     private final UserService userService;
     private final UserValidator userValidator;
+    private final EmailService emailService;
 
     @Autowired
-    public UserController(LoginService loginService, UserService userService, UserValidator userValidator) {
+    public UserController(LoginService loginService, UserService userService, UserValidator userValidator, EmailService emailService) {
         this.loginService = loginService;
         this.userService = userService;
         this.userValidator = userValidator;
+        this.emailService = emailService;
     }
 
     @PostMapping("/login")
@@ -39,8 +42,8 @@ public class UserController {
         if (answer != null) {
             return new ResponseEntity<>(answer, HttpStatus.BAD_REQUEST);
         } else {
-            userService.signUp(userForm);
-            return ResponseEntity.ok("success");
+            emailService.sendRegistrationEmail(userService.signUp(userForm));
+            return ResponseEntity.ok("A confirmation e-mail has been sent to " + userForm.getEmail());
         }
     }
 }

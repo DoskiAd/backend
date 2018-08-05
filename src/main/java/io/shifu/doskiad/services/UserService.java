@@ -9,5 +9,5 @@ public interface UserService {
 
     Optional<User> findByEmail(String email);
 
-    void signUp(UserForm userForm);
+    User signUp(UserForm userForm);
 }

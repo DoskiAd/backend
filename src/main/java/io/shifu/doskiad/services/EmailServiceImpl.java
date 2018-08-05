@@ -1,5 +1,6 @@
 package io.shifu.doskiad.services;
 
+import io.shifu.doskiad.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -31,11 +32,13 @@ public class EmailServiceImpl implements EmailService {
 
     @Async
     @Override
-    public void sendEmail(String mail, String subject, String text) {
+    public void sendRegistrationEmail(User user) {
+        // Send email
         SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(mail);
-        email.setSubject(subject);
-        email.setText(text);
+        email.setTo(user.getEmail());
+        email.setSubject("Registration Confirmation");
+        email.setText("To confirm your e-mail address, please click the link below:\n"
+                + env.getProperty("mail.path") + "/confirm?token=" + user.getConfirmationToken());
         email.setFrom(env.getProperty("mail.from"));
         mailSender.send(email);
     }

@@ -22,6 +22,12 @@ public class User {
     @Column(name = "hash_password")
     private String hashPassword;
 
+    @Column(name = "confirmation_token")
+    private String confirmationToken;
+
+    @Column(name = "reset_token")
+    private String resetToken;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
     @Enumerated(value = EnumType.STRING)
@@ -68,6 +74,22 @@ public class User {
 
     public void setHashPassword(String hashPassword) {
         this.hashPassword = hashPassword;
+    }
+
+    public String getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public void setConfirmationToken(String confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 
     public Role getRole() {

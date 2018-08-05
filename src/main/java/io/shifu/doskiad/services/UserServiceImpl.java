@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void signUp(UserForm userForm) {
+    public User signUp(UserForm userForm) {
         String hashPassword = passwordEncoder.encode(userForm.getPassword());
 
         User user = new User();
@@ -38,9 +39,12 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userForm.getLastName());
         user.setHashPassword(hashPassword);
         user.setEmail(userForm.getEmail());
+        user.setConfirmationToken(UUID.randomUUID().toString());
         user.setRole(Role.USER);
-        user.setState(State.ACTIVE);
+        user.setState(State.DEACTIVATED);
 
         usersRepository.save(user);
+
+        return user;
     }
 }
