@@ -33,12 +33,21 @@ public class EmailServiceImpl implements EmailService {
     @Async
     @Override
     public void sendRegistrationEmail(User user) {
-        // Send email
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(user.getEmail());
         email.setSubject("Registration Confirmation");
-        email.setText("To confirm your e-mail address, please click the link below:\n"
-                + env.getProperty("mail.path") + "/confirm?token=" + user.getConfirmationToken());
+        email.setText("You confirmation key: " + user.getConfirmationToken());
+        email.setFrom(env.getProperty("mail.from"));
+        mailSender.send(email);
+    }
+
+    @Async
+    @Override
+    public void sendResetEmail(User user) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setSubject("Reset password");
+        email.setText("You password reset key: " + user.getResetToken());
         email.setFrom(env.getProperty("mail.from"));
         mailSender.send(email);
     }

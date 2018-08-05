@@ -6,4 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 public interface EmailService {
     @Async
     void sendRegistrationEmail(User user);
+
+    @Async
+    void sendResetEmail(User user);
 }

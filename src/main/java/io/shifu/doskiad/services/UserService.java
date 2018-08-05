@@ -1,5 +1,6 @@
 package io.shifu.doskiad.services;
 
+import io.shifu.doskiad.forms.PasswordForm;
 import io.shifu.doskiad.forms.UserForm;
 import io.shifu.doskiad.model.User;
 
@@ -13,5 +14,11 @@ public interface UserService {
 
     Optional<User> findByConfirmationToken(String token);
 
+    Optional<User> findByResetToken(String token);
+
     void activateUser(User user);
+
+    User reset(User user);
+
+    void changePassword(User user, PasswordForm passwordForm);
 }

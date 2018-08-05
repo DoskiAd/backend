@@ -1,5 +1,6 @@
 package io.shifu.doskiad.services;
 
+import io.shifu.doskiad.forms.PasswordForm;
 import io.shifu.doskiad.forms.UserForm;
 import io.shifu.doskiad.model.Role;
 import io.shifu.doskiad.model.State;
@@ -54,9 +55,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByResetToken(String token) {
+        return usersRepository.findByResetToken(token);
+    }
+
+    @Override
     public void activateUser(User user) {
         user.setConfirmationToken(null);
         user.setState(State.ACTIVE);
+
+        usersRepository.save(user);
+    }
+
+    @Override
+    public User reset(User user) {
+        user.setResetToken(UUID.randomUUID().toString());
+
+        usersRepository.save(user);
+
+        return user;
+    }
+
+    @Override
+    public void changePassword(User user, PasswordForm passwordForm) {
+        String hashPassword = passwordEncoder.encode(passwordForm.getPassword());
+
+        user.setResetToken(null);
+        user.setState(State.ACTIVE);
+        user.setHashPassword(hashPassword);
 
         usersRepository.save(user);
     }
