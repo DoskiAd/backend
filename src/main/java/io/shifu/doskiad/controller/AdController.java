@@ -42,12 +42,14 @@ public class AdController {
             @RequestParam(value = "size", required = false, defaultValue = "12") Integer size,
             @RequestParam(value = "d", required = false, defaultValue = "desc") String direction,
             @RequestParam(value = "p", required = false, defaultValue = "date") String param,
+            @RequestParam(value = "min", required = false, defaultValue = "-1") Long min,
+            @RequestParam(value = "max", required = false, defaultValue = "999999999999999") Long max,
             @RequestParam(value = "title", required = false) String title) {
         Page<Item> result;
         if (title != null) {
-            result = itemService.findByCategoryAndTitle(id, title, page, size, direction, param);
+            result = itemService.findByCategoryAndTitle(id, title, page, size, direction, param, min, max);
         } else {
-            result = itemService.findByCategory(id, page, size, direction, param);
+            result = itemService.findByCategory(id, page, size, direction, param, min, max);
         }
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("totalFound", Long.toString(result.getTotalElements()));
@@ -67,12 +69,14 @@ public class AdController {
             @RequestParam(value = "size", required = false, defaultValue = "12") Integer size,
             @RequestParam(value = "d", required = false, defaultValue = "desc") String direction,
             @RequestParam(value = "p", required = false, defaultValue = "date") String param,
+            @RequestParam(value = "min", required = false, defaultValue = "-1") Long min,
+            @RequestParam(value = "max", required = false, defaultValue = "999999999999999") Long max,
             @RequestParam(value = "title", required = false) String title) {
         Page<Item> result;
         if (title != null) {
-            result = itemService.findByTitle(title, page, size, direction, param);
+            result = itemService.findByTitle(title, page, size, direction, param, min, max);
         } else {
-            result = itemService.find(page, size, direction, param);
+            result = itemService.find(page, size, direction, param, min, max);
         }
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("totalFound", Long.toString(result.getTotalElements()));

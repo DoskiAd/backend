@@ -10,11 +10,11 @@ public interface ItemService {
 	
 	Optional<Item> findById(Long id);
 
-    Page<Item> find(Integer page, Integer size, String direction, String param);
+    Page<Item> find(Integer page, Integer size, String direction, String param, Long min, Long max);
 
-    Page<Item> findByTitle(String title, Integer page, Integer size, String direction, String param);
+    Page<Item> findByTitle(String title, Integer page, Integer size, String direction, String param, Long min, Long max);
 
-    Page<Item> findByCategory(Long id, Integer page, Integer size, String direction, String param);
+    Page<Item> findByCategory(Long id, Integer page, Integer size, String direction, String param, Long min, Long max);
 
-    Page<Item> findByCategoryAndTitle(Long id, String title, Integer page, Integer size, String direction, String param);
+    Page<Item> findByCategoryAndTitle(Long id, String title, Integer page, Integer size, String direction, String param, Long min, Long max);
 }

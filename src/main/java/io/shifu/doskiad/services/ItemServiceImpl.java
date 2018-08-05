@@ -28,26 +28,26 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> find(Integer page, Integer size, String direction, String param) {
-        return itemRepository.findAll(PageRequest.of(
+    public Page<Item> find(Integer page, Integer size, String direction, String param, Long min, Long max) {
+        return itemRepository.findAllByPriceBetween(min, max, PageRequest.of(
                 page - 1, size, Sort.Direction.valueOf(direction.toUpperCase()), param));
     }
 
     @Override
-    public Page<Item> findByTitle(String title, Integer page, Integer size, String direction, String param) {
-        return itemRepository.findAllByTitleContaining(title, PageRequest.of(
+    public Page<Item> findByTitle(String title, Integer page, Integer size, String direction, String param, Long min, Long max) {
+        return itemRepository.findAllByTitleContainingAndPriceBetween(title, min, max, PageRequest.of(
                 page - 1, size, Sort.Direction.valueOf(direction.toUpperCase()), param));
     }
 
     @Override
-    public Page<Item> findByCategory(Long id, Integer page, Integer size, String direction, String param) {
-        return itemRepository.findAllByCategory(id, PageRequest.of(
+    public Page<Item> findByCategory(Long id, Integer page, Integer size, String direction, String param, Long min, Long max) {
+        return itemRepository.findAllByCategoryAndPriceBetween(id, min, max, PageRequest.of(
                 page - 1, size, Sort.Direction.valueOf(direction.toUpperCase()), param));
     }
 
     @Override
-    public Page<Item> findByCategoryAndTitle(Long id, String title, Integer page, Integer size, String direction, String param) {
-        return itemRepository.findAllByCategoryAndTitleContaining(id, title, PageRequest.of(
+    public Page<Item> findByCategoryAndTitle(Long id, String title, Integer page, Integer size, String direction, String param, Long min, Long max) {
+        return itemRepository.findAllByCategoryAndTitleContainingAndPriceBetween(id, title, min, max, PageRequest.of(
                 page - 1, size, Sort.Direction.valueOf(direction.toUpperCase()), param));
     }
 }

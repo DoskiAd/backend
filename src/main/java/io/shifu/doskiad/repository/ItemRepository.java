@@ -8,9 +8,11 @@ import io.shifu.doskiad.model.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    Page<Item> findAllByTitleContaining(String title, Pageable pageable);
+    Page<Item> findAllByPriceBetween(Long min, Long max, Pageable pageable);
 
-    Page<Item> findAllByCategory(Long id, Pageable pageable);
+    Page<Item> findAllByTitleContainingAndPriceBetween(String title, Long min, Long max, Pageable pageable);
 
-    Page<Item> findAllByCategoryAndTitleContaining(Long id, String title, Pageable pageable);
+    Page<Item> findAllByCategoryAndPriceBetween(Long id, Long min, Long max, Pageable pageable);
+
+    Page<Item> findAllByCategoryAndTitleContainingAndPriceBetween(Long id, String title, Long min, Long max, Pageable pageable);
 }

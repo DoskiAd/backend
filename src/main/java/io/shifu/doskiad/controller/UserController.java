@@ -73,7 +73,7 @@ public class UserController {
 
         if (optionalUser.isPresent()) {
             emailService.sendResetEmail(userService.reset(optionalUser.get()));
-            return ResponseEntity.ok("A confirmation e-mail has been sent to " + optionalUser.get().getEmail());
+            return ResponseEntity.ok("A restore e-mail has been sent to " + optionalUser.get().getEmail());
         } else {
             return new ResponseEntity<>("Bad email.", HttpStatus.BAD_REQUEST);
         }
