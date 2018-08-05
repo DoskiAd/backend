@@ -15,8 +15,12 @@ import org.springframework.web.context.support.ServletContextResource;
 @RestController
 public class PhotoController {
 	
+	private final ServletContext servletContext;
+
 	@Autowired
-	private ServletContext servletContext;
+	public PhotoController(ServletContext servletContext) {
+		this.servletContext = servletContext;
+	}
 
 	@RequestMapping(value = "items/{id}/photo/{file:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Resource> getImageAsResource(

@@ -1,0 +1,10 @@
+UPDATE doski.categories SET name = 'Транспорт' WHERE id = 1;
+UPDATE doski.categories SET name = 'Недвижимость' WHERE id = 2;
+UPDATE doski.categories SET name = 'Работа' WHERE id = 3;
+UPDATE doski.categories SET name = 'Услуги' WHERE id = 4;
+UPDATE doski.categories SET name = 'Личные вещи' WHERE id = 5;
+UPDATE doski.categories SET name = 'Для дома и дачи' WHERE id = 6;
+UPDATE doski.categories SET name = 'Бытовая электроника' WHERE id = 7;
+UPDATE doski.categories SET name = 'Хобби и отдых' WHERE id = 8;
+UPDATE doski.categories SET name = 'Животные' WHERE id = 9;
+UPDATE doski.categories SET name = 'Для бизнеса' WHERE id = 10;
