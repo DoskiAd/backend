@@ -54,10 +54,11 @@ public class AdController {
         responseHeaders.set("totalPage", Integer.toString(result.getTotalPages()));
         return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/items/{id}", method = RequestMethod.GET)
-    ResponseEntity<Item> getItemById(@PathVariable("id") Long id){
-    	return new ResponseEntity<>(itemService.findById(id).get(), HttpStatus.OK);
+    ResponseEntity<Item> getItemById(@PathVariable("id") Long id) {
+        // отдаём статус ОК и итем, если существует или ошибку 204, если не найдено
+        return itemService.findById(id).map(item -> new ResponseEntity<>(item, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
     }
 
     @RequestMapping(value = "/items", method = RequestMethod.GET)
