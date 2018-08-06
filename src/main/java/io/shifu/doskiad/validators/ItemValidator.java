@@ -28,16 +28,16 @@ public class ItemValidator {
             return "All form fields are required for submission.";
         }
 
-        if (item.getTitle().length() < 8 || item.getTitle().length() > 50) {
-            return "Please use between 8 and 50 characters for title.";
+        if (item.getTitle().length() < 4 || item.getTitle().length() > 50) {
+            return "Please use between 4 and 50 characters for title.";
         }
 
         if (item.getDescription().length() < 8 || item.getDescription().length() > 1000) {
             return "Please use between 8 and 1000 characters for description.";
         }
 
-        if (item.getLocation().length() < 8 || item.getLocation().length() > 20) {
-            return "Please use between 8 and 20 characters for location.";
+        if (item.getLocation().length() < 4 || item.getLocation().length() > 20) {
+            return "Please use between 4 and 20 characters for location.";
         }
 
         return null;
