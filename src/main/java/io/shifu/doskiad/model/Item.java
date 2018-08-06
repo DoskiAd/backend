@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "items")
@@ -28,7 +29,7 @@ public class Item {
 	@Column(name = "price")
 	private Long price;
 	
-	@Column(name = "description")
+	@Column(name = "description", length = 1000)
 	private String description;
 	
 	@Column(name = "location")
@@ -42,6 +43,10 @@ public class Item {
 
 	@OneToMany(mappedBy="item", fetch = FetchType.EAGER)
 	private Set<Contact> contacts;
+
+	@JsonIgnore
+	@Column(name = "user_id")
+	private Long userId;
 
 	public Long getId() {
 		return id;
@@ -121,5 +126,13 @@ public class Item {
 
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

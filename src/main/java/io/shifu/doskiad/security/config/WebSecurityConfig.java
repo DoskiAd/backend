@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(authenticationProvider)
                 .authorizeRequests()
                 .antMatchers("/additem").hasAuthority("USER")
+                .antMatchers("/addphoto/**").hasAuthority("USER")
                 .antMatchers("/login").permitAll();
         http.csrf().disable();
     }

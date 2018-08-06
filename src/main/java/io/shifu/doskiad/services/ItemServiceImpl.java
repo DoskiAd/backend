@@ -3,6 +3,7 @@ package io.shifu.doskiad.services;
 
 import java.util.Optional;
 
+import io.shifu.doskiad.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +17,26 @@ import io.shifu.doskiad.repository.ItemRepository;
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
+    private final ContactRepository contactRepository;
 
     @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, ContactRepository contactRepository) {
         this.itemRepository = itemRepository;
+        this.contactRepository = contactRepository;
     }
-    
+
+    @Override
+    public void save(Item item) {
+        itemRepository.save(item);
+        item.getContacts().forEach(f -> f.setItem(item.getId()));
+        contactRepository.saveAll((item.getContacts()));
+    }
+
+    @Override
+    public void update(Item item) {
+        itemRepository.save(item);
+    }
+
     @Override
     public Optional<Item> findById(Long id) {
     	return itemRepository.findById(id);

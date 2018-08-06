@@ -7,6 +7,10 @@ import org.springframework.data.domain.Page;
 import io.shifu.doskiad.model.Item;
 
 public interface ItemService {
+
+    void save(Item item);
+
+    void update(Item item);
 	
 	Optional<Item> findById(Long id);
 
