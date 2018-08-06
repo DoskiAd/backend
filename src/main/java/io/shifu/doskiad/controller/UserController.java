@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class UserController {
 
@@ -96,5 +97,10 @@ public class UserController {
         } else {
             return new ResponseEntity<>("Bad token.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity handle() {
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
