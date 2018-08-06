@@ -16,17 +16,16 @@ public class UserValidator {
     }
 
     public String validate(UserForm userForm) {
-        String name = userForm.getFirstName();
-        String lName = userForm.getLastName();
+        String name = userForm.getName();
         String email = userForm.getEmail();
         String password = userForm.getPassword();
         String cPassword = userForm.getConfirmPassword();
 
-        if (name == null || lName == null || email == null || password == null || cPassword == null) {
+        if (name == null || email == null || password == null || cPassword == null) {
             return "All form fields are required for submission.";
         }
 
-        if (name.isEmpty() || lName.isEmpty() || email.isEmpty() || password.isEmpty() || cPassword.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || cPassword.isEmpty()) {
             return "All form fields are required for submission.";
         }
 

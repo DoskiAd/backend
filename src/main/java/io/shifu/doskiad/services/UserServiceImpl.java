@@ -36,8 +36,7 @@ public class UserServiceImpl implements UserService {
         String hashPassword = passwordEncoder.encode(userForm.getPassword());
 
         User user = new User();
-        user.setFirstName(userForm.getFirstName());
-        user.setLastName(userForm.getLastName());
+        user.setName(userForm.getName());
         user.setHashPassword(hashPassword);
         user.setEmail(userForm.getEmail());
         user.setConfirmationToken(UUID.randomUUID().toString());

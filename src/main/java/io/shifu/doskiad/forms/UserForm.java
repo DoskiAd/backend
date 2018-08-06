@@ -3,8 +3,7 @@ package io.shifu.doskiad.forms;
 import java.util.Objects;
 
 public class UserForm {
-    private String firstName;
-    private String lastName;
+    private String name;
     private String email;
     private String password;
     private String confirmPassword;
@@ -12,28 +11,19 @@ public class UserForm {
     public UserForm() {
     }
 
-    public UserForm(String firstName, String lastName, String email, String password, String confirmPassword) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public UserForm(String name, String email, String password, String confirmPassword) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -65,8 +55,7 @@ public class UserForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserForm userForm = (UserForm) o;
-        return Objects.equals(firstName, userForm.firstName) &&
-                Objects.equals(lastName, userForm.lastName) &&
+        return Objects.equals(name, userForm.name) &&
                 Objects.equals(email, userForm.email) &&
                 Objects.equals(password, userForm.password) &&
                 Objects.equals(confirmPassword, userForm.confirmPassword);
@@ -75,6 +64,6 @@ public class UserForm {
     @Override
     public int hashCode() {
 
-        return Objects.hash(firstName, lastName, email, password, confirmPassword);
+        return Objects.hash(name, name, email, password, confirmPassword);
     }
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,11 +61,11 @@ public class ResourceController {
             return new ResponseEntity<>(answer, HttpStatus.BAD_REQUEST);
         } else {
             User user = tokenRepository.findOneByValue(token).get().getUser();
-            item.setName(user.getFirstName());
+            item.setName(user.getName());
             item.setUserId(user.getId());
             item.setDate(new Date());
             itemService.save(item);
-            return ResponseEntity.ok("Success" + user.getFirstName() + item.toString());
+            return ResponseEntity.ok("" + item.getId());
         }
     }
 
@@ -89,7 +88,7 @@ public class ResourceController {
                 Integer photo = saveUploadedFiles(Arrays.asList(uploaded), itemId);
                 item.setPhotos(photo);
                 itemService.update(item);
-                return ResponseEntity.ok("Success photo: " + photo);
+                return ResponseEntity.ok(photo + "");
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
