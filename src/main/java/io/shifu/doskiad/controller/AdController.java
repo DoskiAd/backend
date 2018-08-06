@@ -14,7 +14,6 @@ import io.shifu.doskiad.model.Item;
 import io.shifu.doskiad.services.CategoryService;
 import io.shifu.doskiad.services.ItemService;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class AdController {
 
