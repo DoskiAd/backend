@@ -1,6 +1,9 @@
 package io.shifu.doskiad.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import io.shifu.doskiad.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -23,54 +26,43 @@ public class LikeController {
 	
 	private final LikeService likeService;
 	private final TokenRepository tokenRepository;
+	private final ItemService itemService;
 	
 	@Autowired
-    public LikeController(LikeService likeService, TokenRepository tokenRepository) {
+    public LikeController(LikeService likeService, TokenRepository tokenRepository, ItemService itemService) {
         this.likeService = likeService;
         this.tokenRepository = tokenRepository;
-    }
+		this.itemService = itemService;
+	}
 	
-	@RequestMapping(value="/likes", method = RequestMethod.GET)
+	@RequestMapping(value="/likes", method = RequestMethod.POST)
 	public ResponseEntity<List<Item>> getLikes(
 			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "12") Integer size,
             @RequestParam(value = "d", required = false, defaultValue = "desc") String direction,
             @RequestParam(value = "p", required = false, defaultValue = "date") String param,
 			@RequestParam("token") String token){
-		Long id = tokenRepository.findOneByValue(token).get().getUser().getId();
-		List<Like> likes = likeService.findLikesByUser(id);
-		Page<Item> result = likeService.findItemsByLikes(likes, page, size, direction, param);
+		User user = tokenRepository.findOneByValue(token).get().getUser();
+		Page<Item> result = itemService.findItemsByIds(likeService.findItemsIdByUser(user.getId()), page, size, direction, param);
 		HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("totalFound", Long.toString(result.getTotalElements()));
         responseHeaders.set("totalPage", Integer.toString(result.getTotalPages()));
         return new ResponseEntity<>(result.getContent(), responseHeaders, HttpStatus.OK);
 	}
-	
-	
-	@RequestMapping(value="/likes/ids", method = RequestMethod.GET)
-	public ResponseEntity<List<Long>> getListLikes(@RequestParam("token") String token){
-		Long id = tokenRepository.findOneByValue(token).get().getUser().getId();
-		return new ResponseEntity<>(likeService.findItemsIdByUser(id), HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/items/{id}/like", method = RequestMethod.GET)
-	public ResponseEntity<List<Long>> like(
-			@PathVariable(name="id") Long itemid,
-			@RequestParam("token") String token){
-		
-		User user = tokenRepository.findOneByValue(token).get().getUser();
-		List<Long> ids = likeService.findItemsIdByUser(user.getId());
-		if (!ids.contains(itemid)) {
-			Like like = new Like();
-			like.setItem(itemid);
-			like.setUser(user.getId());
-			likeService.add(like);
-		} else {
-			likeService.deleteByUserAndItem(user.getId(),itemid);
-		}
-		
-		ids = likeService.findItemsIdByUser(user.getId());
-		return new ResponseEntity<>(ids, HttpStatus.OK);
-	}
 
+	@RequestMapping(value = {"/like", "/like/{itemId}"}, method = RequestMethod.POST)
+	public ResponseEntity<List<Long>> like(@RequestParam("token") String token,
+										   @PathVariable("itemId") Optional<Long> itemId) {
+		User user = tokenRepository.findOneByValue(token).get().getUser();
+
+		if (itemId.isPresent()) {
+			Optional<Like> optionalLike = likeService.findLikeByUserAndItem(user.getId(), itemId.get());
+			if (optionalLike.isPresent()) {
+                likeService.deleteByUserAndItem(user.getId(), itemId.get());
+			} else {
+			    likeService.add(new Like(itemId.get(), user.getId()));
+			}
+		}
+		return new ResponseEntity<>(likeService.findItemsIdByUser(user.getId()), HttpStatus.OK);
+	}
 }

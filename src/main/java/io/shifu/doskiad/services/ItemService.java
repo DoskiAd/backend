@@ -1,5 +1,6 @@
 package io.shifu.doskiad.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -21,4 +22,6 @@ public interface ItemService {
     Page<Item> findByCategory(Long id, Integer page, Integer size, String direction, String param, Long min, Long max);
 
     Page<Item> findByCategoryAndTitle(Long id, String title, Integer page, Integer size, String direction, String param, Long min, Long max);
+
+    Page<Item> findItemsByIds(List<Long> ids, Integer page, Integer size, String direction, String param);
 }

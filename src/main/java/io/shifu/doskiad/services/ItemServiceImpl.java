@@ -1,6 +1,7 @@
 package io.shifu.doskiad.services;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import io.shifu.doskiad.repository.ContactRepository;
@@ -64,5 +65,11 @@ public class ItemServiceImpl implements ItemService {
     public Page<Item> findByCategoryAndTitle(Long id, String title, Integer page, Integer size, String direction, String param, Long min, Long max) {
         return itemRepository.findAllByCategoryAndTitleContainingAndPriceBetween(id, title, min, max, PageRequest.of(
                 page - 1, size, Sort.Direction.valueOf(direction.toUpperCase()), param));
+    }
+
+    @Override
+    public Page<Item> findItemsByIds(List<Long> ids, Integer page, Integer size, String direction, String param) {
+        return itemRepository.findByIdIn(ids, PageRequest.of(
+                page-1, size, Sort.Direction.valueOf(direction.toUpperCase()), param));
     }
 }

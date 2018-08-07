@@ -28,6 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatcher("/**")
                 .authenticationProvider(authenticationProvider)
                 .authorizeRequests()
+                .antMatchers("/like").hasAuthority("USER")
+                .antMatchers("/likes").hasAuthority("USER")
+                .antMatchers("/like/**").hasAuthority("USER")
                 .antMatchers("/additem").hasAuthority("USER")
                 .antMatchers("/addphoto/**").hasAuthority("USER")
                 .antMatchers("/login").permitAll();

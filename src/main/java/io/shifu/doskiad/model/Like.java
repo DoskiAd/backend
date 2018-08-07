@@ -1,5 +1,7 @@
 package io.shifu.doskiad.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,19 +13,27 @@ import javax.persistence.Table;
 @Entity
 @Table(name="likes")
 public class Like {
-	
+
+	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;	
 
 	@Column(name="item_id")
 	private Long item;
-	
+
+	@JsonIgnore
 	@Column(name="user_id")
 	private Long user;
-	
-	
-	public Long getId() {
+
+    public Like() {} // jpa constructor
+
+    public Like(Long item, Long user) {
+        this.item = item;
+        this.user = user;
+    }
+
+    public Long getId() {
 		return id;
 	}
 

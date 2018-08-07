@@ -9,6 +9,9 @@ import io.shifu.doskiad.model.Like;
 public interface LikeRepository extends JpaRepository<Like, Long>{
 	
     List<Like> findByUser(Long id);
-	Optional<Like> findByItem(Long id);    
+
+	Optional<Like> findByUserAndItem(Long userid, Long itemid);
+
 	void deleteByUserAndItem(Long userid, Long itemid);
+
 }
